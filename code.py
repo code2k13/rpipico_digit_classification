@@ -1,17 +1,18 @@
+import gc
 import sys
-import digitalio
-import busio
-import board
 from time import sleep
-from adafruit_st7735r import ST7735R
-import displayio
-from adafruit_display_text import label
-import svm_min
+
 import bitmaptools
+import board
+import busio
+import digitalio
+import displayio
+import svm_min
 import terminalio
 from adafruit_bitmap_font import bitmap_font
-import gc
+from adafruit_display_text import label
 from adafruit_ov7670 import OV7670
+from adafruit_st7735r import ST7735R
 
 
 # Function to convert RGB565_SWAPPED to grayscale
@@ -104,10 +105,10 @@ while True:
     input_data = []
     for i in range(0,12):
         for j in range(0,12):
-            x = 1 -rgb565_to_1bit(inference_image[i,j])
-            if x < 0.5:
-                x = 0
-            input_data.append(x)
+            gray_pixel = 1 -rgb565_to_1bit(inference_image[i,j])
+            if gray_pixel < 0.5:
+                gray_pixel = 0
+            input_data.append(gray_pixel)
 
     camera_image.dirty()
     display.refresh(minimum_frames_per_second=0)
